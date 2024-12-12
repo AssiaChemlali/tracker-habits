@@ -2,21 +2,21 @@ import React from 'react'
 import { useDispatch, useSelector, UseSelector } from 'react-redux'
 import { RootState } from '../store/store'
 import { removeHabit, toggleHabit } from '../store/habitsSlice'
-
+import { AppDispatch } from '../store/store'
 const HabitList = () => {
 
   const {habits}=useSelector((state:RootState)=>state.habits)
   const today=new Date().toISOString().split('T')[0]
-  const dispatch=useDispatch()
+  const dispatch=useDispatch<AppDispatch>()
 
-  
-
-
+function handleRemoveHabit(id:string) {
+  dispatch(removeHabit({id}))
+}
 
   return (
     <div className=' mt-10'>
       <div className='grid grid-rows-3 mb-5'>
-          {habits.map((habit)=>{
+          {habits?.map((habit)=>{
             return (
               <div className='shadow drop-shadow p-5 mb-5 border' key={habit.id}>
                 <h4 className='text-2xl font-bold mb-2 capitalize'> {habit.name}</h4>
@@ -33,8 +33,10 @@ const HabitList = () => {
                   
                   </button>
 
-                  <button className="p-3 border text-sm border-red-500  text-red-500 capitalize" 
-                  onClick={()=>dispatch(removeHabit({id:habit.id}))}
+                  <button 
+                  onClick={()=>handleRemoveHabit(habit.id)}
+                  className="p-3 border text-sm border-red-500  text-red-500 capitalize" 
+                  
                   >remove </button>
                 </div>
                      

@@ -10,7 +10,6 @@ const HabitForm = () => {
 const dispatch=useDispatch<AppDispatch>()
   function handleAddHait(e:React.FormEvent){
     e.preventDefault()
-  //  console.log(name,frequency)
    if(name.trim()){
       dispatch(addHapit({name,frequency}))
       setName('')

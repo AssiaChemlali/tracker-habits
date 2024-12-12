@@ -20,11 +20,7 @@ const habitsSlice=createSlice({
   name:'habits',
   initialState,
   reducers:{
-     addHapit:
-     (state,
-      action:PayloadAction<{name:string;frequency:"daily"|"weekly"}>
-    )=>{
-
+     addHapit:(state,action:PayloadAction<{name:string;frequency:"daily"|"weekly"}>)=>{
         const newHabit:Habit={
           id:Date.now().toString(),
           name:action.payload.name,
@@ -35,17 +31,12 @@ const habitsSlice=createSlice({
         state.habits.push(newHabit)
 
      },
+
      removeHabit:(state,action:PayloadAction<{id:string}>)=>{
-
-      state.habits.filter((habit)=>{
-        return habit.id!==action.payload.id
-      })
-
+        state.habits = state.habits.filter((habit) => habit.id !== action.payload.id);
      },
-     toggleHabit:(
-      state,
-      action:PayloadAction<{id:string;date:string}>
-    )=>{
+
+     toggleHabit:(state, action:PayloadAction<{id:string;date:string}>)=>{
 
        const habit=state.habits.find((h)=>h.id===action.payload.id)
        if(habit){
