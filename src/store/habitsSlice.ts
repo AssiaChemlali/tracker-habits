@@ -25,26 +25,43 @@ const habitsSlice=createSlice({
       action:PayloadAction<{name:string;frequency:"daily"|"weekly"}>
     )=>{
 
-      const newHabit:Habit={
-        id:Date.now().toString(),
-        name:action.payload.name,
-        frequency:action.payload.frequency,
-        completedDates:[],
-        createdAt:new Date().toISOString(),
+        const newHabit:Habit={
+          id:Date.now().toString(),
+          name:action.payload.name,
+          frequency:action.payload.frequency,
+          completedDates:[],
+          createdAt:new Date().toISOString(),
+        }
+        state.habits.push(newHabit)
+
+     },
+     removeHabit:(state,action:PayloadAction<{id:string}>)=>{
+
+      state.habits.filter((habit)=>{
+        return habit.id!==action.payload.id
+      })
+
+     },
+     toggleHabit:(
+      state,
+      action:PayloadAction<{id:string;date:string}>
+    )=>{
+
+       const habit=state.habits.find((h)=>h.id===action.payload.id)
+       if(habit){
+        const index=habit.completedDates.indexOf(action.payload.date)
+
+        if(index > -1){
+          habit.completedDates.slice(index,1)
+        } else{
+          habit.completedDates.push(action.payload.date)
+        }
        }
-      state.habits.push(newHabit)
-
-     },
-     removeHabit:()=>{
-
-     },
-     toggleHabit:()=>{
-
      }
      
      
   }
 
 })
-export const {addHapit,removeHabit}=habitsSlice.actions
+export const {addHapit,removeHabit,toggleHabit}=habitsSlice.actions
 export default habitsSlice.reducer

@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector, UseSelector } from 'react-redux'
+import { AppDispatch } from '../store/store'
+import { addHapit } from '../store/habitsSlice'
 
 const HabitForm = () => {
   const [name,setName]=useState<string>('')
   const [frequency,setFrequency]=useState<"daily"|"weekly">("daily")
 
-const dispatch=useDispatch()
-  // const hapits =useSelector(state=>state.habits)
+const dispatch=useDispatch<AppDispatch>()
   function handleAddHait(e:React.FormEvent){
     e.preventDefault()
-   console.log(name,frequency)
+  //  console.log(name,frequency)
+   if(name.trim()){
+      dispatch(addHapit({name,frequency}))
+      setName('')
+   }
 
 
     
